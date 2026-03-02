@@ -1,99 +1,157 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muebles Evoty</title>
-<style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    text-align: center;
-}
-
-header {
-    background-color: #000;
-    color: white;
-    padding: 20px;
-}
-
-h1 {
-    margin: 0;
-}
-
-.section {
-    padding: 40px 20px;
-}
-
-.product {
-    background: white;
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 400px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.product img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-button {
-    background-color: #25D366;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #1ebe5d;
-}
-
-footer {
-    background: #000;
-    color: white;
-    padding: 20px;
-    margin-top: 40px;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Sistema Maestro Heiner V21</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #1a262b; padding: 20px; color: #333; }
+        .container { max-width: 1050px; margin: auto; background: #fdfdfd; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h1 { text-align: center; color: #0d47a1; text-transform: uppercase; border-bottom: 4px solid #0d47a1; padding-bottom: 10px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        th { background: #0d47a1; color: white; padding: 10px; text-align: left; font-size: 14px; }
+        td { padding: 8px 10px; border: 1px solid #cfd8dc; }
+        input { width: 100%; border: none; background: transparent; font-weight: bold; font-size: 17px; padding: 4px; }
+        input:focus { outline: none; background: #fffde7; }
+        .input-moneda { display: flex; align-items: center; background: #f1f8e9; border: 2px solid #b0bec5; border-radius: 4px; padding-left: 8px; }
+        .input-moneda span { font-weight: bold; color: #2e7d32; font-size: 18px; }
+        input.cant { background: #fffde7; text-align: center; border: 2px solid #fbc02d; border-radius: 4px; width: 65px; color: #000; }
+        .seccion { background: #e3f2fd; font-weight: bold; text-align: center; color: #0d47a1; text-transform: uppercase; }
+        .controles-flex { display: flex; justify-content: space-around; gap: 20px; margin: 20px 0; }
+        .caja-control { flex: 1; text-align: center; padding: 15px; border-radius: 12px; border: 3px solid #fbc02d; background: #fff9c4; }
+        .pizarra { margin-top: 20px; background: #102027; color: white; padding: 25px; border-radius: 12px; border-left: 12px solid #81c784; }
+        .linea { display: flex; justify-content: space-between; font-size: 22px; margin-bottom: 8px; border-bottom: 1px solid #37474f; padding-bottom: 5px; }
+        .ganancia-fuerte { color: #ffeb3b; font-weight: bold; font-size: 26px; }
+        .total-grande { font-size: 55px; color: #81c784; text-align: center; font-weight: bold; margin-top: 15px; border-top: 2px solid #444; padding-top: 10px; }
+        .btn-add { background: #0288d1; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
+    </style>
 </head>
-
 <body>
 
-<header>
-<h1>Muebles Evoty</h1>
-<p>Diseños modernos para tu hogar</p>
-</header>
+<div class="container">
+    <h1>Cotizador Maestro - Heiner</h1>
 
-<div class="section">
-<div class="product">
-<img src="https://images.unsplash.com/photo-1616628182506-1f88c0e7b7c7" alt="Closet moderno">
-<h2>Closet Moderno</h2>
-<p>Diseño elegante y funcional.</p>
-<button onclick="window.location.href='https://wa.me/50600000000'">
-Consultar por WhatsApp
-</button>
+    <table id="tabla-materiales">
+        <thead>
+            <tr>
+                <th>Descripción del Material</th>
+                <th style="width:90px;">Cant.</th>
+                <th style="width:220px;">Precio Unitario</th>
+                <th style="width:220px; text-align:right;">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="cuerpo-est">
+            <tr class="seccion"><td colspan="4">Estructura y Herrajes</td></tr>
+            </tbody>
+    </table>
+    <button class="btn-add" onclick="agregarFilaMaterial()">+ AGREGAR OTRO MATERIAL</button>
+
+    <div class="controles-flex">
+        <div class="caja-control">
+            <span style="font-weight:bold; font-size: 18px;">% RIESGO:</span><br>
+            <input type="number" id="riesgo-perc" value="5" style="width:80px; text-align:center; font-size: 24px;" oninput="calcularTodo()"> <span style="font-size: 20px; font-weight: bold;">%</span>
+        </div>
+        <div class="caja-control" style="border-color: #2e7d32; background: #e8f5e9;">
+            <span style="font-weight:bold; font-size: 18px;">% GANANCIA:</span><br>
+            <input type="number" id="porc" value="100" style="width:100px; text-align:center; font-size: 24px;" oninput="calcularTodo()"> <span style="font-size: 20px; font-weight: bold;">%</span>
+        </div>
+    </div>
+
+    <table id="tabla-logistica">
+        <thead>
+            <tr>
+                <th>Gasto de Logística</th>
+                <th style="width:440px; text-align:right;">Monto del Gasto (Directo)</th>
+            </tr>
+        </thead>
+        <tbody id="cuerpo-log">
+            <tr class="seccion"><td colspan="2">Logística y Varios</td></tr>
+            <tr>
+                <td><strong>TRANSPORTE</strong></td>
+                <td><div class="input-moneda"><span>₡</span><input type="text" class="p-log" value="0" onblur="formatearEste(this)" onfocus="limpiarParaEditar(this)"></div></td>
+            </tr>
+            <tr>
+                <td><strong>GASOLINA</strong></td>
+                <td><div class="input-moneda"><span>₡</span><input type="text" class="p-log" value="0" onblur="formatearEste(this)" onfocus="limpiarParaEditar(this)"></div></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pizarra">
+        <div class="linea"><span>Costo Materiales:</span> <span id="out-mat">₡0</span></div>
+        <div class="linea" style="color: #ffa726;"><span>Monto por Riesgo:</span> <span id="out-riesgo-val">₡0</span></div>
+        <div class="linea ganancia-fuerte"><span>Tu Ganancia Real:</span> <span id="out-gan">₡0</span></div>
+        <div class="linea"><span>Gastos Logística:</span> <span id="out-log">₡0</span></div>
+        <div class="total-grande">
+            <span style="font-size: 20px; color: #fff; display: block;">PRECIO TOTAL AL CLIENTE</span>
+            <span id="out-total">₡0</span>
+        </div>
+    </div>
 </div>
 
-<div class="product">
-<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Cocina moderna">
-<h2>Cocina Integral</h2>
-<p>Acabados premium y personalizados.</p>
-<button onclick="window.location.href='https://wa.me/50600000000'">
-Consultar por WhatsApp
-</button>
-</div>
-</div>
+<script>
+    const materialesExcel = [
+        ["Melamina BLANCO AL18", 52000], ["Melamina MADERA NO18", 43000], ["Melamina 15 Blanco", 115000],
+        ["Carton 3mm", 18500], ["Canto y Servicio de Pegado", 235], ["Servicio corte", 120],
+        ["Bisagra Cierre Lento", 1200], ["Correderas Cierre lento 20", 4500], ["Jaladores", 975],
+        ["Tapatornillos", 2650], ["Golas", 14500], ["Luces", 60000], ["Aluminio fregadero", 3600],
+        ["Especiero", 30000], ["Prensas golas", 18750]
+    ];
 
-<footer>
-<p>© 2026 Muebles Evoty - Todos los derechos reservados</p>
-</footer>
+    function f(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
+    function limpiarParaEditar(i) { i.value = i.value.replace(/\s/g, ''); }
+    function formatearEste(i) { i.value = f(parseFloat(i.value.replace(/\s/g, '')) || 0); calcularTodo(); }
 
+    const tEst = document.getElementById('cuerpo-est');
+    materialesExcel.forEach(m => {
+        let r = tEst.insertRow();
+        r.innerHTML = `
+            <td><strong>${m[0]}</strong></td>
+            <td><input type="number" class="cant" value="0" oninput="calcularTodo()"></td>
+            <td><div class="input-moneda"><span>₡</span><input type="text" class="p-unit" value="${f(m[1])}" onblur="formatearEste(this)" onfocus="limpiarParaEditar(this)"></div></td>
+            <td align="right" class="sub-total" style="font-weight:bold; color:#2e7d32;">₡0</td>
+        `;
+    });
+
+    function agregarFilaMaterial() {
+        let r = tEst.insertRow();
+        r.innerHTML = `
+            <td><input type="text" placeholder="Extra..." style="border-bottom:1px solid #ccc"></td>
+            <td><input type="number" class="cant" value="0" oninput="calcularTodo()"></td>
+            <td><div class="input-moneda"><span>₡</span><input type="text" class="p-unit" value="0" onblur="formatearEste(this)" onfocus="limpiarParaEditar(this)"></div></td>
+            <td align="right" class="sub-total" style="font-weight:bold; color:#2e7d32;">₡0</td>
+        `;
+    }
+
+    function calcularTodo() {
+        let sMat = 0;
+        document.querySelectorAll('#cuerpo-est tr:not(.seccion)').forEach(fRow => {
+            let c = parseFloat(fRow.querySelector('.cant').value) || 0;
+            let p = parseFloat(fRow.querySelector('.p-unit').value.replace(/\s/g, '')) || 0;
+            let sub = c * p; sMat += sub;
+            fRow.querySelector('.sub-total').innerText = "₡" + f(sub);
+        });
+
+        let rPerc = (parseFloat(document.getElementById('riesgo-perc').value) || 0) / 100;
+        let montoRiesgo = sMat * rPerc;
+
+        let sLog = 0;
+        document.querySelectorAll('.p-log').forEach(input => {
+            sLog += parseFloat(input.value.replace(/\s/g, '')) || 0;
+        });
+
+        let porc = (parseFloat(document.getElementById('porc').value) || 0) / 100;
+        let gan = (sMat + montoRiesgo) * porc;
+        let total = sMat + montoRiesgo + gan + sLog;
+
+        document.getElementById('out-mat').innerText = "₡" + f(sMat);
+        document.getElementById('out-riesgo-val').innerText = "₡" + f(montoRiesgo);
+        document.getElementById('out-gan').innerText = "₡" + f(gan);
+        document.getElementById('out-log').innerText = "₡" + f(sLog);
+        document.getElementById('out-total').innerText = "₡" + f(total);
+    }
+    calcularTodo();
+</script>
 </body>
 </html>
+
 
