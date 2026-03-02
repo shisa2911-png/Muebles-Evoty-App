@@ -1,28 +1,99 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Muebles Evoty</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#000000">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muebles Evoty</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+header {
+    background-color: #000;
+    color: white;
+    padding: 20px;
+}
+
+h1 {
+    margin: 0;
+}
+
+.section {
+    padding: 40px 20px;
+}
+
+.product {
+    background: white;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.product img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+button {
+    background-color: #25D366;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #1ebe5d;
+}
+
+footer {
+    background: #000;
+    color: white;
+    padding: 20px;
+    margin-top: 40px;
+}
+</style>
 </head>
 
-<body style="font-family: Arial; text-align:center; padding-top:50px;">
+<body>
 
-  <h1>Muebles Evoty</h1>
-  <p>App instalada correctamente.</p>
+<header>
+<h1>Muebles Evoty</h1>
+<p>Diseños modernos para tu hogar</p>
+</header>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(() => console.log("Service Worker registrado"))
-        .catch(error => console.log("Error:", error));
-    }
-  </script>
+<div class="section">
+<div class="product">
+<img src="https://images.unsplash.com/photo-1616628182506-1f88c0e7b7c7" alt="Closet moderno">
+<h2>Closet Moderno</h2>
+<p>Diseño elegante y funcional.</p>
+<button onclick="window.location.href='https://wa.me/50600000000'">
+Consultar por WhatsApp
+</button>
+</div>
+
+<div class="product">
+<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Cocina moderna">
+<h2>Cocina Integral</h2>
+<p>Acabados premium y personalizados.</p>
+<button onclick="window.location.href='https://wa.me/50600000000'">
+Consultar por WhatsApp
+</button>
+</div>
+</div>
+
+<footer>
+<p>© 2026 Muebles Evoty - Todos los derechos reservados</p>
+</footer>
 
 </body>
-
 </html>
-<!-- actualización -->
+
