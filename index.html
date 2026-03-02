@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Muebles Evoty</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
+</head>
+
+<body style="font-family: Arial; text-align:center; padding-top:50px;">
+
+  <h1>Muebles Evoty</h1>
+  <p>App instalada correctamente.</p>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log("Service Worker registrado"))
+        .catch(error => console.log("Error:", error));
+    }
+  </script>
+
+</body>
+</html>
