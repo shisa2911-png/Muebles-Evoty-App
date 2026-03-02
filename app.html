@@ -5,102 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MAESTRO V21 - Muebles Evoty</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #1a1a1a; color: white; padding: 20px; text-align: center; }
-        .box { border: 2px solid #ffcc00; padding: 20px; border-radius: 15px; background: #222; max-width: 400px; margin: auto; box-shadow: 0px 4px 15px rgba(0,0,0,0.5); }
-        h1 { color: #ffcc00; font-size: 20px; margin: 10px 0; }
-        label { display: block; text-align: left; margin-top: 15px; color: #ffcc00; font-weight: bold; font-size: 14px; }
-        input, select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; font-size: 16px; }
-        button { background: #ffcc00; color: #000; padding: 15px; width: 100%; cursor: pointer; font-weight: bold; border: none; border-radius: 8px; margin-top: 20px; font-size: 16px; transition: 0.3s; }
-        button:active { background: #e6b800; transform: scale(0.98); }
-        .resultado { background: #333; margin-top: 20px; padding: 15px; border-radius: 8px; border-left: 5px solid #ffcc00; text-align: center; }
-        h2 { margin: 0; color: #fff; font-size: 24px; }
-        .version { font-size: 10px; color: #666; margin-top: 20px; }
+        /* DISEÑO DE PANTALLA COMPLETA (CUADRO GRANDE) */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #121212; 
+            color: white; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container { 
+            width: 100%; 
+            max-width: 900px; /* Aquí es donde se hace GRANDE el cuadro */
+            background: #1e1e1e; 
+            padding: 30px; 
+            border-radius: 20px; 
+            border: 2px solid #ffcc00;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        }
+        h1 { color: #ffcc00; text-align: center; font-size: 2.5rem; margin-bottom: 10px; }
+        
+        /* Entradas de datos grandes */
+        .input-group { margin-bottom: 20px; }
+        label { display: block; color: #ffcc00; font-weight: bold; margin-bottom: 8px; font-size: 1.2rem; }
+        input, select { 
+            width: 100%; 
+            padding: 15px; 
+            background: #2b2b2b; 
+            border: 1px solid #444; 
+            color: white; 
+            border-radius: 10px; 
+            font-size: 1.5rem; /* Números grandes para Heiner */
+            box-sizing: border-box;
+        }
+
+        /* Área de resultado gigante */
+        .resultado-box { 
+            background: #2b2b2b; 
+            padding: 30px; 
+            border-radius: 15px; 
+            text-align: center; 
+            margin-top: 30px;
+            border-bottom: 8px solid #ffcc00;
+        }
+        #res { font-size: 4rem; color: #ffcc00; margin: 0; }
+        #detalle { font-size: 1.2rem; color: #888; }
+
+        button { 
+            width: 100%; 
+            padding: 20px; 
+            background: #ffcc00; 
+            color: black; 
+            border: none; 
+            border-radius: 10px; 
+            font-weight: bold; 
+            font-size: 1.3rem; 
+            cursor: pointer; 
+            margin-top: 20px;
+        }
+        img { display: block; margin: 0 auto 20px; max-width: 150px; }
     </style>
 </head>
 <body>
 
-    <div class="box">
-        <img src="Icons/icon-192x192.png" alt="Logo" style="width: 70px; margin-bottom: 5px;" onerror="this.style.display='none'">
+    <div class="container">
+        <img src="Icons/icon-192x192.png" alt="Muebles Evoty" onerror="this.style.display='none'">
         
         <h1>SISTEMA MAESTRO V21</h1>
-        <p style="font-size: 12px; color: #888; margin: 0;">Control de Cotizaciones</p>
-        
-        <label>Largo del mueble (cm):</label>
-        <input type="number" id="l" placeholder="Ej: 120" oninput="guardarYCalcular()">
-        
-        <label>Ancho / Fondo (cm):</label>
-        <input type="number" id="a" placeholder="Ej: 60" oninput="guardarYCalcular()">
-        
-        <label>Tipo de Material:</label>
-        <select id="m" onchange="guardarYCalcular()">
-            <option value="15000">Melamina Estándar (₡15k)</option>
-            <option value="19000">Melamina Hidrófuga (₡19k)</option>
-            <option value="25000">Madera Sólida (₡25k)</option>
-        </select>
 
-        <div class="resultado">
-            <h2 id="res">₡0</h2>
-            <small id="detalle" style="color: #aaa;">Esperando medidas...</small>
+        <div class="input-group">
+            <label>Largo (cm):</label>
+            <input type="number" id="l" placeholder="0" oninput="calcular()">
         </div>
 
-        <button onclick="borrarTodo()">BORRAR TODO</button>
-        
-        <div class="version">V21.4 - Actualización Automática Activa</div>
+        <div class="input-group">
+            <label>Ancho / Fondo (cm):</label>
+            <input type="number" id="a" placeholder="0" oninput="calcular()">
+        </div>
+
+        <div class="input-group">
+            <label>Material:</label>
+            <select id="m" onchange="calcular()">
+                <option value="15000">Melamina Estándar (₡15k)</option>
+                <option value="19000">Melamina Hidrófuga (₡19k)</option>
+                <option value="25000">Madera Sólida (₡25k)</option>
+            </select>
+        </div>
+
+        <div class="resultado-box">
+            <h2 id="res">₡0</h2>
+            <div id="detalle">Ingrese las medidas para cotizar</div>
+        </div>
+
+        <button onclick="borrar()">LIMPIAR TODO</button>
     </div>
 
     <script>
-        // 1. CARGAR DATOS AL ABRIR
+        // RECUPERAR DATOS AL ABRIR
         window.onload = function() {
-            if(localStorage.getItem('evoty_largo')) {
-                document.getElementById('l').value = localStorage.getItem('evoty_largo');
-                document.getElementById('a').value = localStorage.getItem('evoty_ancho');
-                document.getElementById('m').value = localStorage.getItem('evoty_material');
-                calcular(); 
+            if(localStorage.getItem('evoty_l')) {
+                document.getElementById('l').value = localStorage.getItem('evoty_l');
+                document.getElementById('a').value = localStorage.getItem('evoty_a');
+                document.getElementById('m').value = localStorage.getItem('evoty_m');
+                calcular();
             }
-            // Forzar actualización de la App en segundo plano
-            if (navigator.serviceWorker) {
-                navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.update()));
-            }
-        };
-
-        // 2. GUARDAR Y CALCULAR AL MISMO TIEMPO
-        function guardarYCalcular() {
-            let largo = document.getElementById('l').value;
-            let ancho = document.getElementById('a').value;
-            let material = document.getElementById('m').value;
-
-            localStorage.setItem('evoty_largo', largo);
-            localStorage.setItem('evoty_ancho', ancho);
-            localStorage.setItem('evoty_material', material);
-            
-            calcular();
         }
 
+        // CALCULAR Y GUARDAR
         function calcular() {
             let l = document.getElementById('l').value;
             let a = document.getElementById('a').value;
-            let p = document.getElementById('m').value;
+            let m = document.getElementById('m').value;
+
+            // Guardar en memoria
+            localStorage.setItem('evoty_l', l);
+            localStorage.setItem('evoty_a', a);
+            localStorage.setItem('evoty_m', m);
 
             if(l > 0 && a > 0) {
-                let m2 = (l / 100) * (a / 100);
-                let total = m2 * p;
-                document.getElementById('res').innerText = "₡" + Math.round(total).toLocaleString();
-                document.getElementById('detalle').innerText = "Área: " + m2.toFixed(2) + " m²";
+                let m2 = (l/100) * (a/100);
+                let total = Math.round(m2 * m);
+                document.getElementById('res').innerText = "₡" + total.toLocaleString();
+                document.getElementById('detalle').innerText = "Superficie: " + m2.toFixed(2) + " m²";
             } else {
                 document.getElementById('res').innerText = "₡0";
-                document.getElementById('detalle').innerText = "Ingrese medidas";
+                document.getElementById('detalle').innerText = "Esperando medidas...";
             }
         }
 
-        // 3. BOTÓN PARA LIMPIAR SI TERMINÓ EL TRABAJO
-        function borrarTodo() {
-            if(confirm("¿Deseas borrar los datos actuales?")) {
+        function borrar() {
+            if(confirm("¿Borrar cotización actual?")) {
                 localStorage.clear();
                 location.reload();
             }
         }
     </script>
 </body>
-</html
+</html>
+¿Qué cambió ahora?
+Cuadro Grande: El contenedor ahora es ancho (900px) y los textos son gigantes para que se lean bien desde lejos en el taller.
+
+Memoria Activa: Heiner puede cerrar la ventana y al abrirla los datos seguirán ahí.
+
+Logo: He dejado el espacio listo para el logo de la carpeta Icons.
+
+¿Vuelve a verse como lo tenías antes (grande y cómodo)? Si el tamaño sigue sin convencerte, dime si quieres que ocupe el 100% de la pantalla de lado a lado.
 
 
