@@ -3,145 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISTEMA MAESTRO V21 - Muebles Evoty</title>
+    <title>MAESTRO HEINER V21 - Muebles Evoty</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: white; margin: 0; padding: 20px; }
-        .container { max-width: 1100px; margin: auto; background: #1e1e1e; padding: 30px; border-radius: 15px; border: 2px solid #ffcc00; }
-        h1 { color: #ffcc00; text-align: center; margin-bottom: 30px; font-size: 2.5rem; text-transform: uppercase; }
+        body { font-family: 'Arial Black', sans-serif; background: #121212; color: white; padding: 20px; margin: 0; }
+        .container { max-width: 1200px; margin: auto; background: #1e1e1e; padding: 30px; border: 5px solid #ffcc00; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
+        h1 { color: #ffcc00; text-align: center; font-size: 3rem; margin-bottom: 20px; text-shadow: 2px 2px #000; }
         
-        /* Layout de Cuadrícula Grande */
-        .grid-principal { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-        .seccion { background: #262626; padding: 20px; border-radius: 10px; border: 1px solid #444; }
-        h3 { color: #ffcc00; margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 10px; }
+        .grid-maestro { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .seccion-industrial { background: #2a2a2a; padding: 25px; border-radius: 15px; border: 1px solid #444; }
+        h3 { color: #ffcc00; border-bottom: 3px solid #ffcc00; padding-bottom: 10px; margin-top: 0; font-size: 1.5rem; }
 
-        label { display: block; margin-top: 15px; font-weight: bold; color: #aaa; }
-        input, select { width: 100%; padding: 12px; margin-top: 5px; background: #333; border: 1px solid #555; color: white; border-radius: 6px; font-size: 1.1rem; box-sizing: border-box; }
+        label { display: block; margin-top: 15px; font-weight: bold; font-size: 1.2rem; color: #ffcc00; }
+        input, select { width: 100%; padding: 15px; margin-top: 8px; background: #333; border: 2px solid #555; color: white; border-radius: 10px; font-size: 1.4rem; box-sizing: border-box; }
         
-        /* Resultados */
-        .totales { grid-column: span 2; background: #ffcc00; color: black; padding: 30px; border-radius: 15px; text-align: center; margin-top: 25px; }
-        #precio-final { font-size: 4.5rem; font-weight: bold; margin: 0; }
-        .desglose-texto { font-size: 1.1rem; margin-top: 10px; font-weight: 500; }
+        .caja-total { grid-column: span 2; background: #ffcc00; color: black; padding: 40px; border-radius: 20px; text-align: center; margin-top: 25px; }
+        #precio-final { font-size: 6rem; font-weight: bold; margin: 0; line-height: 1; }
+        .detalle-costo { font-size: 1.3rem; margin-top: 15px; font-weight: bold; border-top: 1px solid rgba(0,0,0,0.2); padding-top: 10px; }
 
-        button { background: #ff4444; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 25px; font-size: 1rem; }
-        .logo { display: block; margin: 0 auto 20px; max-width: 130px; }
+        .btn-limpiar { background: #d32f2f; color: white; border: none; padding: 20px; width: 100%; border-radius: 12px; cursor: pointer; font-size: 1.3rem; font-weight: bold; margin-top: 30px; text-transform: uppercase; }
+        img { display: block; margin: 0 auto 15px; max-width: 180px; }
 
-        @media (max-width: 800px) { .grid-principal { grid-template-columns: 1fr; } .totales { grid-column: span 1; } }
+        @media (max-width: 850px) { .grid-maestro { grid-template-columns: 1fr; } .caja-total { grid-column: span 1; } #precio-final { font-size: 4rem; } }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <img src="Icons/icon-192x192.png" alt="Muebles Evoty" class="logo" onerror="this.style.display='none'">
+    <img src="Icons/icon-192x192.png" alt="Muebles Evoty" onerror="this.style.display='none'">
     <h1>MAESTRO HEINER V21</h1>
 
-    <div class="grid-principal">
-        <div class="seccion">
-            <h3>1. Medidas de Lámina</h3>
-            <label>Largo Total (cm):</label>
-            <input type="number" id="l" placeholder="0" oninput="calcular()">
+    <div class="grid-maestro">
+        <div class="seccion-industrial">
+            <h3>1. ESTRUCTURA Y LÁMINA</h3>
+            <label>Largo del Mueble (cm):</label>
+            <input type="number" id="largo" placeholder="0" oninput="calcularMaestro()">
             <label>Ancho / Fondo (cm):</label>
-            <input type="number" id="a" placeholder="0" oninput="calcular()">
-            <label>Tipo de Lámina:</label>
-            <select id="p_lamina" onchange="calcular()">
+            <input type="number" id="ancho" placeholder="0" oninput="calcularMaestro()">
+            <label>Tipo de Material:</label>
+            <select id="p_lamina" onchange="calcularMaestro()">
                 <option value="15000">Melamina Estándar (₡15,000)</option>
                 <option value="19500">Melamina Hidrófuga (₡19,500)</option>
                 <option value="28000">Madera Sólida / Especial (₡28,000)</option>
             </select>
         </div>
 
-        <div class="seccion">
-            <h3>2. Herrajes y Accesorios</h3>
+        <div class="seccion-industrial">
+            <h3>2. HERRAJES Y ACABADOS</h3>
             <label>Bisagras (Cantidad):</label>
-            <input type="number" id="bisagras" value="0" oninput="calcular()">
+            <input type="number" id="bisagras" value="0" oninput="calcularMaestro()">
             <label>Rieles de Gaveta (Pares):</label>
-            <input type="number" id="rieles" value="0" oninput="calcular()">
+            <input type="number" id="rieles" value="0" oninput="calcularMaestro()">
             <label>Tiraderas / Jaladores:</label>
-            <input type="number" id="tira" value="0" oninput="calcular()">
-            <label>Pistones de Gas / Otros:</label>
-            <input type="number" id="extras" value="0" oninput="calcular()">
+            <input type="number" id="tiraderas" value="0" oninput="calcularMaestro()">
+            <label>Tapacanto (Metros):</label>
+            <input type="number" id="tapacanto" value="0" oninput="calcularMaestro()">
         </div>
 
-        <div class="seccion">
-            <h3>3. Tapacantos y Pegamento</h3>
-            <label>Metros de Tapacanto:</label>
-            <input type="number" id="tapa_m" value="0" oninput="calcular()">
-            <label>Pegamento / Tornillos (₡):</label>
-            <input type="number" id="insumos" value="3000" oninput="calcular()">
+        <div class="seccion-industrial">
+            <h3>3. INSUMOS Y FLETE</h3>
+            <label>Tornillos, Goma, Lija (₡):</label>
+            <input type="number" id="insumos" value="4000" oninput="calcularMaestro()">
+            <label>Flete y Acarreo (₡):</label>
+            <input type="number" id="flete" value="0" oninput="calcularMaestro()">
         </div>
 
-        <div class="seccion">
-            <h3>4. Instalación y Utilidad</h3>
-            <label>Flete / Transporte (₡):</label>
-            <input type="number" id="flete" value="0" oninput="calcular()">
+        <div class="seccion-industrial">
+            <h3>4. MANO DE OBRA Y UTILIDAD</h3>
             <label>Margen de Ganancia:</label>
-            <select id="margen" onchange="calcular()">
-                <option value="1.30">30% sobre costo</option>
-                <option value="1.50">50% (Recomendado)</option>
-                <option value="1.80">80% (Diseño Especial)</option>
-                <option value="2.00">100% (Duplicar)</option>
+            <select id="margen" onchange="calcularMaestro()">
+                <option value="1.30">30% (Margen Mínimo)</option>
+                <option value="1.50">50% (Margen Estándar)</option>
+                <option value="1.75">75% (Trabajo Especial)</option>
+                <option value="2.00">100% (Duplicar Costo)</option>
             </select>
         </div>
 
-        <div class="totales">
-            <p style="margin:0; font-weight:bold; letter-spacing: 2px;">PRESUPUESTO PARA CLIENTE</p>
+        <div class="caja-total">
+            <p style="margin:0; font-weight:bold; letter-spacing: 2px; font-size: 1.5rem;">PRECIO DE VENTA FINAL</p>
             <h2 id="precio-final">₡0</h2>
-            <div id="desglose" class="desglose-texto">Esperando datos...</div>
+            <div id="desglose" class="detalle-costo">Ingrese datos para cotizar</div>
         </div>
     </div>
 
-    <button onclick="borrarDatos()">BORRAR TODO E INICIAR NUEVO</button>
+    <button class="btn-limpiar" onclick="resetear()">BORRAR COTIZACIÓN Y REINICIAR</button>
 </div>
 
 <script>
-    // PRECIOS FIJOS DE HERRAJES (Puedes editarlos aquí)
-    const COSTO_BISAGRA = 900;
-    const COSTO_RIEL = 3800;
-    const COSTO_TIRADERA = 1500;
-    const COSTO_TAPACANTO_M = 500;
+    // PRECIOS UNITARIOS DE REFERENCIA (Modifica si cambian en la ferretería)
+    const PRECIO_BISAGRA = 950;
+    const PRECIO_RIEL = 3800;
+    const PRECIO_TIRADERA = 1500;
+    const PRECIO_TAPACANTO = 550;
 
-    // Al cargar, recuperar TODO de la memoria
+    // ESTO CARGA LOS DATOS AUTOMÁTICAMENTE AL ABRIR
     window.onload = function() {
-        const ids = ['l','a','p_lamina','bisagras','rieles','tira','extras','tapa_m','insumos','flete','margen'];
-        ids.forEach(id => {
-            if(localStorage.getItem('evoty_v21_'+id)) {
-                document.getElementById(id).value = localStorage.getItem('evoty_v21_'+id);
-            }
+        const campos = ['largo','ancho','p_lamina','bisagras','rieles','tiraderas','tapacanto','insumos','flete','margen'];
+        campos.forEach(id => {
+            const guardado = localStorage.getItem('heiner_v21_' + id);
+            if (guardado) document.getElementById(id).value = guardado;
         });
-        calcular();
+        calcularMaestro();
     };
 
-    function calcular() {
-        // Obtener valores
-        let l = parseFloat(document.getElementById('l').value) || 0;
-        let a = parseFloat(document.getElementById('a').value) || 0;
+    function calcularMaestro() {
+        // Obtener valores de la pantalla
+        let l = parseFloat(document.getElementById('largo').value) || 0;
+        let a = parseFloat(document.getElementById('ancho').value) || 0;
         let p_lam = parseFloat(document.getElementById('p_lamina').value);
         let n_bis = parseFloat(document.getElementById('bisagras').value) || 0;
-        let n_riel = parseFloat(document.getElementById('rieles').value) || 0;
-        let n_tira = parseFloat(document.getElementById('tira').value) || 0;
-        let n_ext = parseFloat(document.getElementById('extras').value) || 0;
-        let m_tapa = parseFloat(document.getElementById('tapa_m').value) || 0;
+        let n_rie = parseFloat(document.getElementById('rieles').value) || 0;
+        let n_tira = parseFloat(document.getElementById('tiraderas').value) || 0;
+        let m_tapa = parseFloat(document.getElementById('tapacanto').value) || 0;
         let v_insu = parseFloat(document.getElementById('insumos').value) || 0;
         let v_flete = parseFloat(document.getElementById('flete').value) || 0;
-        let m_ganancia = parseFloat(document.getElementById('margen').value);
+        let u = parseFloat(document.getElementById('margen').value);
 
-        // Guardar cada paso en memoria
-        const ids = ['l','a','p_lamina','bisagras','rieles','tira','extras','tapa_m','insumos','flete','margen'];
-        ids.forEach(id => localStorage.setItem('evoty_v21_'+id, document.getElementById(id).value));
+        // GUARDAR CADA DATO PARA QUE NO SE BORRE
+        const campos = ['largo','ancho','p_lamina','bisagras','rieles','tiraderas','tapacanto','insumos','flete','margen'];
+        campos.forEach(id => localStorage.setItem('heiner_v21_' + id, document.getElementById(id).value));
 
-        // Cálculos matemáticos
-        let c_madera = (l/100) * (a/100) * p_lam;
-        let c_herrajes = (n_bis * COSTO_BISAGRA) + (n_riel * COSTO_RIEL) + (n_tira * COSTO_TIRADERA) + (m_tapa * COSTO_TAPACANTO_M) + n_ext;
+        // OPERACIONES DEL MAESTRO
+        let costo_madera = (l/100) * (a/100) * p_lam;
+        let costo_herrajes = (n_bis * PRECIO_BISAGRA) + (n_rie * PRECIO_RIEL) + (n_tira * PRECIO_TIRADERA) + (m_tapa * PRECIO_TAPACANTO);
         
-        let costo_base = c_madera + c_herrajes + v_insu + v_flete;
-        let precio_venta = Math.round(costo_base * m_ganancia);
+        let costo_base = costo_madera + costo_herrajes + v_insu + v_flete;
+        let total_venta = Math.round(costo_base * u);
 
-        // Mostrar en pantalla
-        document.getElementById('precio-final').innerText = "₡" + precio_venta.toLocaleString();
-        document.getElementById('desglose').innerText = "Costo Materiales: ₡" + Math.round(costo_base).toLocaleString() + " | Utilidad aplicada: " + ((m_ganancia-1)*100).toFixed(0) + "%";
+        // MOSTRAR RESULTADOS GIGANTES
+        document.getElementById('precio-final').innerText = "₡" + total_venta.toLocaleString();
+        document.getElementById('desglose').innerHTML = `Materiales: ₡${Math.round(costo_base).toLocaleString()} | Utilidad: ${Math.round((u-1)*100)}%`;
     }
 
-    function borrarDatos() {
-        if(confirm("¿Seguro que quieres borrar todos los datos de herrajes y medidas?")) {
+    function resetear() {
+        if(confirm("¿Deseas borrar todos los datos de esta cotización?")) {
             localStorage.clear();
             location.reload();
         }
@@ -150,6 +144,7 @@
 
 </body>
 </html>
+
 
 
 
