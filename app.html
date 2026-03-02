@@ -3,154 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAESTRO V21 - Muebles Evoty</title>
+    <title>SISTEMA MAESTRO V21 - Muebles Evoty</title>
     <style>
-        /* DISEÑO DE PANTALLA COMPLETA (CUADRO GRANDE) */
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: #121212; 
-            color: white; 
-            margin: 0; 
-            padding: 20px; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .container { 
-            width: 100%; 
-            max-width: 900px; /* Aquí es donde se hace GRANDE el cuadro */
-            background: #1e1e1e; 
-            padding: 30px; 
-            border-radius: 20px; 
-            border: 2px solid #ffcc00;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-        }
-        h1 { color: #ffcc00; text-align: center; font-size: 2.5rem; margin-bottom: 10px; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: white; margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: auto; background: #1e1e1e; padding: 30px; border-radius: 15px; border: 2px solid #ffcc00; }
+        h1 { color: #ffcc00; text-align: center; margin-bottom: 30px; font-size: 2.5rem; text-transform: uppercase; }
         
-        /* Entradas de datos grandes */
-        .input-group { margin-bottom: 20px; }
-        label { display: block; color: #ffcc00; font-weight: bold; margin-bottom: 8px; font-size: 1.2rem; }
-        input, select { 
-            width: 100%; 
-            padding: 15px; 
-            background: #2b2b2b; 
-            border: 1px solid #444; 
-            color: white; 
-            border-radius: 10px; 
-            font-size: 1.5rem; /* Números grandes para Heiner */
-            box-sizing: border-box;
-        }
+        /* Layout de Cuadrícula Grande */
+        .grid-principal { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .seccion { background: #262626; padding: 20px; border-radius: 10px; border: 1px solid #444; }
+        h3 { color: #ffcc00; margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 10px; }
 
-        /* Área de resultado gigante */
-        .resultado-box { 
-            background: #2b2b2b; 
-            padding: 30px; 
-            border-radius: 15px; 
-            text-align: center; 
-            margin-top: 30px;
-            border-bottom: 8px solid #ffcc00;
-        }
-        #res { font-size: 4rem; color: #ffcc00; margin: 0; }
-        #detalle { font-size: 1.2rem; color: #888; }
+        label { display: block; margin-top: 15px; font-weight: bold; color: #aaa; }
+        input, select { width: 100%; padding: 12px; margin-top: 5px; background: #333; border: 1px solid #555; color: white; border-radius: 6px; font-size: 1.1rem; box-sizing: border-box; }
+        
+        /* Resultados */
+        .totales { grid-column: span 2; background: #ffcc00; color: black; padding: 30px; border-radius: 15px; text-align: center; margin-top: 25px; }
+        #precio-final { font-size: 4.5rem; font-weight: bold; margin: 0; }
+        .desglose-texto { font-size: 1.1rem; margin-top: 10px; font-weight: 500; }
 
-        button { 
-            width: 100%; 
-            padding: 20px; 
-            background: #ffcc00; 
-            color: black; 
-            border: none; 
-            border-radius: 10px; 
-            font-weight: bold; 
-            font-size: 1.3rem; 
-            cursor: pointer; 
-            margin-top: 20px;
-        }
-        img { display: block; margin: 0 auto 20px; max-width: 150px; }
+        button { background: #ff4444; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 25px; font-size: 1rem; }
+        .logo { display: block; margin: 0 auto 20px; max-width: 130px; }
+
+        @media (max-width: 800px) { .grid-principal { grid-template-columns: 1fr; } .totales { grid-column: span 1; } }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="Icons/icon-192x192.png" alt="Muebles Evoty" onerror="this.style.display='none'">
-        
-        <h1>SISTEMA MAESTRO V21</h1>
+<div class="container">
+    <img src="Icons/icon-192x192.png" alt="Muebles Evoty" class="logo" onerror="this.style.display='none'">
+    <h1>MAESTRO HEINER V21</h1>
 
-        <div class="input-group">
-            <label>Largo (cm):</label>
+    <div class="grid-principal">
+        <div class="seccion">
+            <h3>1. Medidas de Lámina</h3>
+            <label>Largo Total (cm):</label>
             <input type="number" id="l" placeholder="0" oninput="calcular()">
-        </div>
-
-        <div class="input-group">
             <label>Ancho / Fondo (cm):</label>
             <input type="number" id="a" placeholder="0" oninput="calcular()">
-        </div>
-
-        <div class="input-group">
-            <label>Material:</label>
-            <select id="m" onchange="calcular()">
-                <option value="15000">Melamina Estándar (₡15k)</option>
-                <option value="19000">Melamina Hidrófuga (₡19k)</option>
-                <option value="25000">Madera Sólida (₡25k)</option>
+            <label>Tipo de Lámina:</label>
+            <select id="p_lamina" onchange="calcular()">
+                <option value="15000">Melamina Estándar (₡15,000)</option>
+                <option value="19500">Melamina Hidrófuga (₡19,500)</option>
+                <option value="28000">Madera Sólida / Especial (₡28,000)</option>
             </select>
         </div>
 
-        <div class="resultado-box">
-            <h2 id="res">₡0</h2>
-            <div id="detalle">Ingrese las medidas para cotizar</div>
+        <div class="seccion">
+            <h3>2. Herrajes y Accesorios</h3>
+            <label>Bisagras (Cantidad):</label>
+            <input type="number" id="bisagras" value="0" oninput="calcular()">
+            <label>Rieles de Gaveta (Pares):</label>
+            <input type="number" id="rieles" value="0" oninput="calcular()">
+            <label>Tiraderas / Jaladores:</label>
+            <input type="number" id="tira" value="0" oninput="calcular()">
+            <label>Pistones de Gas / Otros:</label>
+            <input type="number" id="extras" value="0" oninput="calcular()">
         </div>
 
-        <button onclick="borrar()">LIMPIAR TODO</button>
+        <div class="seccion">
+            <h3>3. Tapacantos y Pegamento</h3>
+            <label>Metros de Tapacanto:</label>
+            <input type="number" id="tapa_m" value="0" oninput="calcular()">
+            <label>Pegamento / Tornillos (₡):</label>
+            <input type="number" id="insumos" value="3000" oninput="calcular()">
+        </div>
+
+        <div class="seccion">
+            <h3>4. Instalación y Utilidad</h3>
+            <label>Flete / Transporte (₡):</label>
+            <input type="number" id="flete" value="0" oninput="calcular()">
+            <label>Margen de Ganancia:</label>
+            <select id="margen" onchange="calcular()">
+                <option value="1.30">30% sobre costo</option>
+                <option value="1.50">50% (Recomendado)</option>
+                <option value="1.80">80% (Diseño Especial)</option>
+                <option value="2.00">100% (Duplicar)</option>
+            </select>
+        </div>
+
+        <div class="totales">
+            <p style="margin:0; font-weight:bold; letter-spacing: 2px;">PRESUPUESTO PARA CLIENTE</p>
+            <h2 id="precio-final">₡0</h2>
+            <div id="desglose" class="desglose-texto">Esperando datos...</div>
+        </div>
     </div>
 
-    <script>
-        // RECUPERAR DATOS AL ABRIR
-        window.onload = function() {
-            if(localStorage.getItem('evoty_l')) {
-                document.getElementById('l').value = localStorage.getItem('evoty_l');
-                document.getElementById('a').value = localStorage.getItem('evoty_a');
-                document.getElementById('m').value = localStorage.getItem('evoty_m');
-                calcular();
+    <button onclick="borrarDatos()">BORRAR TODO E INICIAR NUEVO</button>
+</div>
+
+<script>
+    // PRECIOS FIJOS DE HERRAJES (Puedes editarlos aquí)
+    const COSTO_BISAGRA = 900;
+    const COSTO_RIEL = 3800;
+    const COSTO_TIRADERA = 1500;
+    const COSTO_TAPACANTO_M = 500;
+
+    // Al cargar, recuperar TODO de la memoria
+    window.onload = function() {
+        const ids = ['l','a','p_lamina','bisagras','rieles','tira','extras','tapa_m','insumos','flete','margen'];
+        ids.forEach(id => {
+            if(localStorage.getItem('evoty_v21_'+id)) {
+                document.getElementById(id).value = localStorage.getItem('evoty_v21_'+id);
             }
+        });
+        calcular();
+    };
+
+    function calcular() {
+        // Obtener valores
+        let l = parseFloat(document.getElementById('l').value) || 0;
+        let a = parseFloat(document.getElementById('a').value) || 0;
+        let p_lam = parseFloat(document.getElementById('p_lamina').value);
+        let n_bis = parseFloat(document.getElementById('bisagras').value) || 0;
+        let n_riel = parseFloat(document.getElementById('rieles').value) || 0;
+        let n_tira = parseFloat(document.getElementById('tira').value) || 0;
+        let n_ext = parseFloat(document.getElementById('extras').value) || 0;
+        let m_tapa = parseFloat(document.getElementById('tapa_m').value) || 0;
+        let v_insu = parseFloat(document.getElementById('insumos').value) || 0;
+        let v_flete = parseFloat(document.getElementById('flete').value) || 0;
+        let m_ganancia = parseFloat(document.getElementById('margen').value);
+
+        // Guardar cada paso en memoria
+        const ids = ['l','a','p_lamina','bisagras','rieles','tira','extras','tapa_m','insumos','flete','margen'];
+        ids.forEach(id => localStorage.setItem('evoty_v21_'+id, document.getElementById(id).value));
+
+        // Cálculos matemáticos
+        let c_madera = (l/100) * (a/100) * p_lam;
+        let c_herrajes = (n_bis * COSTO_BISAGRA) + (n_riel * COSTO_RIEL) + (n_tira * COSTO_TIRADERA) + (m_tapa * COSTO_TAPACANTO_M) + n_ext;
+        
+        let costo_base = c_madera + c_herrajes + v_insu + v_flete;
+        let precio_venta = Math.round(costo_base * m_ganancia);
+
+        // Mostrar en pantalla
+        document.getElementById('precio-final').innerText = "₡" + precio_venta.toLocaleString();
+        document.getElementById('desglose').innerText = "Costo Materiales: ₡" + Math.round(costo_base).toLocaleString() + " | Utilidad aplicada: " + ((m_ganancia-1)*100).toFixed(0) + "%";
+    }
+
+    function borrarDatos() {
+        if(confirm("¿Seguro que quieres borrar todos los datos de herrajes y medidas?")) {
+            localStorage.clear();
+            location.reload();
         }
+    }
+</script>
 
-        // CALCULAR Y GUARDAR
-        function calcular() {
-            let l = document.getElementById('l').value;
-            let a = document.getElementById('a').value;
-            let m = document.getElementById('m').value;
-
-            // Guardar en memoria
-            localStorage.setItem('evoty_l', l);
-            localStorage.setItem('evoty_a', a);
-            localStorage.setItem('evoty_m', m);
-
-            if(l > 0 && a > 0) {
-                let m2 = (l/100) * (a/100);
-                let total = Math.round(m2 * m);
-                document.getElementById('res').innerText = "₡" + total.toLocaleString();
-                document.getElementById('detalle').innerText = "Superficie: " + m2.toFixed(2) + " m²";
-            } else {
-                document.getElementById('res').innerText = "₡0";
-                document.getElementById('detalle').innerText = "Esperando medidas...";
-            }
-        }
-
-        function borrar() {
-            if(confirm("¿Borrar cotización actual?")) {
-                localStorage.clear();
-                location.reload();
-            }
-        }
-    </script>
 </body>
 </html>
-¿Qué cambió ahora?
-Cuadro Grande: El contenedor ahora es ancho (900px) y los textos son gigantes para que se lean bien desde lejos en el taller.
 
-Memoria Activa: Heiner puede cerrar la ventana y al abrirla los datos seguirán ahí.
-
-Logo: He dejado el espacio listo para el logo de la carpeta Icons.
-
-¿Vuelve a verse como lo tenías antes (grande y cómodo)? Si el tamaño sigue sin convencerte, dime si quieres que ocupe el 100% de la pantalla de lado a lado.
 
 
