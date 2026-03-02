@@ -2,155 +2,105 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Sistema Maestro Heiner V21</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAESTRO V21 - Muebles Evoty</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #1a262b; padding: 20px; color: #333; }
-        .container { max-width: 1050px; margin: auto; background: #fdfdfd; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1 { text-align: center; color: #0d47a1; text-transform: uppercase; border-bottom: 4px solid #0d47a1; padding-bottom: 10px; margin-bottom: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
-        th { background: #0d47a1; color: white; padding: 10px; text-align: left; font-size: 14px; }
-        td { padding: 8px 10px; border: 1px solid #cfd8dc; }
-        input { width: 100%; border: none; background: transparent; font-weight: bold; font-size: 17px; padding: 4px; }
-        input:focus { outline: none; background: #fffde7; }
-        .input-moneda { display: flex; align-items: center; background: #f1f8e9; border: 2px solid #b0bec5; border-radius: 4px; padding-left: 8px; }
-        .input-moneda span { font-weight: bold; color: #2e7d32; font-size: 18px; }
-        input.cant { background: #fffde7; text-align: center; border: 2px solid #fbc02d; border-radius: 4px; width: 65px; color: #000; }
-        .seccion { background: #e3f2fd; font-weight: bold; text-align: center; color: #0d47a1; text-transform: uppercase; }
-        .controles-flex { display: flex; justify-content: space-around; gap: 20px; margin: 20px 0; }
-        .caja-control { flex: 1; text-align: center; padding: 15px; border-radius: 12px; border: 3px solid #fbc02d; background: #fff9c4; }
-        .pizarra { margin-top: 20px; background: #102027; color: white; padding: 25px; border-radius: 12px; border-left: 12px solid #81c784; }
-        .linea { display: flex; justify-content: space-between; font-size: 22px; margin-bottom: 8px; border-bottom: 1px solid #37474f; padding-bottom: 5px; }
-        .ganancia-fuerte { color: #ffeb3b; font-weight: bold; font-size: 26px; }
-        .total-grande { font-size: 55px; color: #81c784; text-align: center; font-weight: bold; margin-top: 15px; border-top: 2px solid #444; padding-top: 10px; }
-        .btn-add { background: #0288d1; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
+        body { font-family: Arial, sans-serif; background: #1a1a1a; color: white; padding: 20px; text-align: center; }
+        .box { border: 2px solid #ffcc00; padding: 20px; border-radius: 15px; background: #222; max-width: 400px; margin: auto; box-shadow: 0px 4px 15px rgba(0,0,0,0.5); }
+        h1 { color: #ffcc00; font-size: 20px; margin: 10px 0; }
+        label { display: block; text-align: left; margin-top: 15px; color: #ffcc00; font-weight: bold; font-size: 14px; }
+        input, select { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid #444; background: #333; color: white; box-sizing: border-box; font-size: 16px; }
+        button { background: #ffcc00; color: #000; padding: 15px; width: 100%; cursor: pointer; font-weight: bold; border: none; border-radius: 8px; margin-top: 20px; font-size: 16px; transition: 0.3s; }
+        button:active { background: #e6b800; transform: scale(0.98); }
+        .resultado { background: #333; margin-top: 20px; padding: 15px; border-radius: 8px; border-left: 5px solid #ffcc00; text-align: center; }
+        h2 { margin: 0; color: #fff; font-size: 24px; }
+        .version { font-size: 10px; color: #666; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Cotizador Maestro - Heiner</h1>
+    <div class="box">
+        <img src="Icons/icon-192x192.png" alt="Logo" style="width: 70px; margin-bottom: 5px;" onerror="this.style.display='none'">
+        
+        <h1>SISTEMA MAESTRO V21</h1>
+        <p style="font-size: 12px; color: #888; margin: 0;">Control de Cotizaciones</p>
+        
+        <label>Largo del mueble (cm):</label>
+        <input type="number" id="l" placeholder="Ej: 120" oninput="guardarYCalcular()">
+        
+        <label>Ancho / Fondo (cm):</label>
+        <input type="number" id="a" placeholder="Ej: 60" oninput="guardarYCalcular()">
+        
+        <label>Tipo de Material:</label>
+        <select id="m" onchange="guardarYCalcular()">
+            <option value="15000">Melamina Estándar (₡15k)</option>
+            <option value="19000">Melamina Hidrófuga (₡19k)</option>
+            <option value="25000">Madera Sólida (₡25k)</option>
+        </select>
 
-    <table id="tabla-materiales">
-        <thead>
-            <tr>
-                <th>Descripción del Material</th>
-                <th style="width:90px;">Cant.</th>
-                <th style="width:220px;">Precio Unitario</th>
-                <th style="width:220px; text-align:right;">Subtotal</th>
-            </tr>
-        </thead>
-        <tbody id="cuerpo-est">
-            <tr class="seccion"><td colspan="4">Estructura y Herrajes</td></tr>
-            </tbody>
-    </table>
-    <button class="btn-add" onclick="agregarFilaMaterial()">+ AGREGAR OTRO MATERIAL</button>
+        <div class="resultado">
+            <h2 id="res">₡0</h2>
+            <small id="detalle" style="color: #aaa;">Esperando medidas...</small>
+        </div>
 
-    <div class="controles-flex">
-        <div class="caja-control">
-            <span style="font-weight:bold; font-size: 18px;">% RIESGO:</span><br>
-            <input type="number" id="riesgo-perc" value="5" style="width:80px; text-align:center; font-size: 24px;" oninput="calcularTodo()"> <span style="font-size: 20px; font-weight: bold;">%</span>
-        </div>
-        <div class="caja-control" style="border-color: #2e7d32; background: #e8f5e9;">
-            <span style="font-weight:bold; font-size: 18px;">% GANANCIA:</span><br>
-            <input type="number" id="porc" value="100" style="width:100px; text-align:center; font-size: 24px;" oninput="calcularTodo()"> <span style="font-size: 20px; font-weight: bold;">%</span>
-        </div>
+        <button onclick="borrarTodo()">BORRAR TODO</button>
+        
+        <div class="version">V21.4 - Actualización Automática Activa</div>
     </div>
 
-    <table id="tabla-logistica">
-        <thead>
-            <tr>
-                <th>Gasto de Logística</th>
-                <th style="width:440px; text-align:right;">Monto del Gasto (Directo)</th>
-            </tr>
-        </thead>
-        <tbody id="cuerpo-log">
-            <tr class="seccion"><td colspan="2">Logística y Varios</td></tr>
-            <tr>
-                <td><strong>TRANSPORTE</strong></td>
-                <td><div class="input-moneda"><span>₡</span><input type="text" class="p-log" value="0" onblur="formatearEste(this)" onfocus="limpiarParaEditar(this)"></div></td>
-            </tr>
-            <tr>
-                <td><strong>GASOLINA</strong></td>
-                <td><div class="input-moneda"><span>₡</span><input type="text" class="p-log" value="0" onblur="formatearEste(this)" onfocus="limpiarParaEditar(this)"></div></td>
-            </tr>
-        </tbody>
-    </table>
+    <script>
+        // 1. CARGAR DATOS AL ABRIR
+        window.onload = function() {
+            if(localStorage.getItem('evoty_largo')) {
+                document.getElementById('l').value = localStorage.getItem('evoty_largo');
+                document.getElementById('a').value = localStorage.getItem('evoty_ancho');
+                document.getElementById('m').value = localStorage.getItem('evoty_material');
+                calcular(); 
+            }
+            // Forzar actualización de la App en segundo plano
+            if (navigator.serviceWorker) {
+                navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.update()));
+            }
+        };
 
-    <div class="pizarra">
-        <div class="linea"><span>Costo Materiales:</span> <span id="out-mat">₡0</span></div>
-        <div class="linea" style="color: #ffa726;"><span>Monto por Riesgo:</span> <span id="out-riesgo-val">₡0</span></div>
-        <div class="linea ganancia-fuerte"><span>Tu Ganancia Real:</span> <span id="out-gan">₡0</span></div>
-        <div class="linea"><span>Gastos Logística:</span> <span id="out-log">₡0</span></div>
-        <div class="total-grande">
-            <span style="font-size: 20px; color: #fff; display: block;">PRECIO TOTAL AL CLIENTE</span>
-            <span id="out-total">₡0</span>
-        </div>
-    </div>
-</div>
+        // 2. GUARDAR Y CALCULAR AL MISMO TIEMPO
+        function guardarYCalcular() {
+            let largo = document.getElementById('l').value;
+            let ancho = document.getElementById('a').value;
+            let material = document.getElementById('m').value;
 
-<script>
-    const materialesExcel = [
-        ["Melamina BLANCO AL18", 52000], ["Melamina MADERA NO18", 43000], ["Melamina 15 Blanco", 115000],
-        ["Carton 3mm", 18500], ["Canto y Servicio de Pegado", 235], ["Servicio corte", 120],
-        ["Bisagra Cierre Lento", 1200], ["Correderas Cierre lento 20", 4500], ["Jaladores", 975],
-        ["Tapatornillos", 2650], ["Golas", 14500], ["Luces", 60000], ["Aluminio fregadero", 3600],
-        ["Especiero", 30000], ["Prensas golas", 18750]
-    ];
+            localStorage.setItem('evoty_largo', largo);
+            localStorage.setItem('evoty_ancho', ancho);
+            localStorage.setItem('evoty_material', material);
+            
+            calcular();
+        }
 
-    function f(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
-    function limpiarParaEditar(i) { i.value = i.value.replace(/\s/g, ''); }
-    function formatearEste(i) { i.value = f(parseFloat(i.value.replace(/\s/g, '')) || 0); calcularTodo(); }
+        function calcular() {
+            let l = document.getElementById('l').value;
+            let a = document.getElementById('a').value;
+            let p = document.getElementById('m').value;
 
-    const tEst = document.getElementById('cuerpo-est');
-    materialesExcel.forEach(m => {
-        let r = tEst.insertRow();
-        r.innerHTML = `
-            <td><strong>${m[0]}</strong></td>
-            <td><input type="number" class="cant" value="0" oninput="calcularTodo()"></td>
-            <td><div class="input-moneda"><span>₡</span><input type="text" class="p-unit" value="${f(m[1])}" onblur="formatearEste(this)" onfocus="limpiarParaEditar(this)"></div></td>
-            <td align="right" class="sub-total" style="font-weight:bold; color:#2e7d32;">₡0</td>
-        `;
-    });
+            if(l > 0 && a > 0) {
+                let m2 = (l / 100) * (a / 100);
+                let total = m2 * p;
+                document.getElementById('res').innerText = "₡" + Math.round(total).toLocaleString();
+                document.getElementById('detalle').innerText = "Área: " + m2.toFixed(2) + " m²";
+            } else {
+                document.getElementById('res').innerText = "₡0";
+                document.getElementById('detalle').innerText = "Ingrese medidas";
+            }
+        }
 
-    function agregarFilaMaterial() {
-        let r = tEst.insertRow();
-        r.innerHTML = `
-            <td><input type="text" placeholder="Extra..." style="border-bottom:1px solid #ccc"></td>
-            <td><input type="number" class="cant" value="0" oninput="calcularTodo()"></td>
-            <td><div class="input-moneda"><span>₡</span><input type="text" class="p-unit" value="0" onblur="formatearEste(this)" onfocus="limpiarParaEditar(this)"></div></td>
-            <td align="right" class="sub-total" style="font-weight:bold; color:#2e7d32;">₡0</td>
-        `;
-    }
-
-    function calcularTodo() {
-        let sMat = 0;
-        document.querySelectorAll('#cuerpo-est tr:not(.seccion)').forEach(fRow => {
-            let c = parseFloat(fRow.querySelector('.cant').value) || 0;
-            let p = parseFloat(fRow.querySelector('.p-unit').value.replace(/\s/g, '')) || 0;
-            let sub = c * p; sMat += sub;
-            fRow.querySelector('.sub-total').innerText = "₡" + f(sub);
-        });
-
-        let rPerc = (parseFloat(document.getElementById('riesgo-perc').value) || 0) / 100;
-        let montoRiesgo = sMat * rPerc;
-
-        let sLog = 0;
-        document.querySelectorAll('.p-log').forEach(input => {
-            sLog += parseFloat(input.value.replace(/\s/g, '')) || 0;
-        });
-
-        let porc = (parseFloat(document.getElementById('porc').value) || 0) / 100;
-        let gan = (sMat + montoRiesgo) * porc;
-        let total = sMat + montoRiesgo + gan + sLog;
-
-        document.getElementById('out-mat').innerText = "₡" + f(sMat);
-        document.getElementById('out-riesgo-val').innerText = "₡" + f(montoRiesgo);
-        document.getElementById('out-gan').innerText = "₡" + f(gan);
-        document.getElementById('out-log').innerText = "₡" + f(sLog);
-        document.getElementById('out-total').innerText = "₡" + f(total);
-    }
-    calcularTodo();
-</script>
+        // 3. BOTÓN PARA LIMPIAR SI TERMINÓ EL TRABAJO
+        function borrarTodo() {
+            if(confirm("¿Deseas borrar los datos actuales?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+    </script>
 </body>
-</html>
+</html
+
 
